@@ -4,6 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>正在跳转到WhatsApp</title>
+    
+    <!-- 添加的 Meta Pixel 代码 -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '623059780216649'); // 
+        fbq('track', 'PageView');
+    </script>
+    <noscript>
+        <img height="1" width="1" style="display:none" 
+             src="https://www.facebook.com/tr?id=623059780216649&ev=PageView&noscript=1"/>
+    </noscript>
+    <!-- End Meta Pixel 代码 -->
+    
     <style>
         * {
             margin: 0;
@@ -177,7 +197,7 @@
 
     <script>
         // 配置：设置您的 WhatsApp 链接
-        const WHATSAPP_LINK = "https://wa.link/zhiku";
+        const WHATSAPP_LINK = "https://wa.link/qiuzhiyuan";
         
         // 获取DOM元素
         const countdownElement = document.getElementById('countdown');
@@ -207,6 +227,9 @@
             hasRedirected = true;
             
             statusText.textContent = "正在跳转到 WhatsApp...";
+            
+            // 添加的Pixel事件 - 追踪跳转
+            fbq('track', 'WhatsAppRedirect');
             
             try {
                 // 尝试在新标签页打开
