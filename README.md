@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>正在跳转到WhatsApp</title>
+    <title>正在为你转接招聘人员</title>
     
     <!-- 添加的 Meta Pixel 代码 -->
     <script>
@@ -170,7 +170,7 @@
         
         <h1>即将跳转到 WhatsApp 咨询</h1>
         
-        <div class="countdown" id="countdown">3</div>
+        <div class="countdown" id="countdown">1</div>
         
         <div class="consent-box">
             <p>请仔细阅读并同意以下条款：</p>
@@ -205,7 +205,7 @@
         const continueBtn = document.getElementById('continueBtn');
         const statusText = document.getElementById('statusText');
         
-        let countdown = 3;
+        let countdown = 1;
         let countdownInterval;
         let hasRedirected = false;
         
