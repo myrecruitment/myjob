@@ -3,9 +3,292 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>正在为你转接招聘人员</title>
-    
-    <!-- 添加的 Meta Pixel 代码 -->
+    <title>WhatsApp招聘咨询</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .features {
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(37, 211, 102, 0.1);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover {
+            background: rgba(37, 211, 102, 0.2);
+            transform: translateX(5px);
+        }
+
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            color: #25D366;
+        }
+
+        .whatsapp-btn {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.4);
+        }
+
+        .whatsapp-btn:active {
+            transform: translateY(0);
+        }
+
+        .whatsapp-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .whatsapp-btn:hover::before {
+            left: 100%;
+        }
+
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .status.success {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .status.error {
+            background: rgba(244, 67, 54, 0.1);
+            color: #F44336;
+            border: 1px solid rgba(244, 67, 54, 0.3);
+        }
+
+        .countdown {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .countdown-circle {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-circle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: conic-gradient(#25D366 0deg, transparent 0deg);
+            border-radius: 50%;
+            animation: countdown-fill 1s linear forwards;
+        }
+
+        .countdown-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #25D366;
+            z-index: 1;
+            position: relative;
+            background: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes countdown-fill {
+            0% { background: conic-gradient(#25D366 0deg, transparent 0deg); }
+            100% { background: conic-gradient(#25D366 360deg, transparent 360deg); }
+        }
+
+        .loading {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #25D366;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .footer {
+            margin-top: 30px;
+            color: #888;
+            font-size: 14px;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .whatsapp-btn {
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">📱</div>
+        <h1>WhatsApp招聘咨询</h1>
+        <p class="subtitle">立即联系我们的招聘顾问，获取最新职位信息和专业建议</p>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">✨</div>
+                <div>专业招聘顾问一对一服务</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🚀</div>
+                <div>最新职位信息实时更新</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">💼</div>
+                <div>个性化职业发展建议</div>
+            </div>
+        </div>
+
+        <button class="whatsapp-btn" onclick="redirectToWhatsApp()">
+            📱 立即咨询 WhatsApp
+        </button>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p id="loadingText">正在跳转到WhatsApp...</p>
+        </div>
+
+        <div class="countdown" id="countdown">
+            <div class="countdown-circle">
+                <div class="countdown-number" id="countdownNumber">1</div>
+            </div>
+            <p>秒后自动跳转到WhatsApp</p>
+        </div>
+
+        <div class="status" id="status"></div>
+
+        <div class="footer">
+            <p>点击按钮将跳转到WhatsApp应用</p>
+            <button onclick="testPixelEvent()" style="margin-top: 10px; padding: 5px 10px; background: #666; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                🧪 测试Lead事件
+            </button>
+        </div>
+    </div>
+
+    <!-- Facebook Pixel Code -->
     <script>
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -15,270 +298,198 @@
         t.src=v;s=b.getElementsByTagName(e)[0];
         s.parentNode.insertBefore(t,s)}(window, document,'script',
         'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '623059780216649'); // 
-        fbq('track', 'PageView');
+
+        // ⚠️ 重要：请替换为你的Facebook Pixel ID
+        fbq('init', '623059780216649'); 
     </script>
     <noscript>
         <img height="1" width="1" style="display:none" 
              src="https://www.facebook.com/tr?id=623059780216649&ev=PageView&noscript=1"/>
     </noscript>
-    <!-- End Meta Pixel 代码 -->
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #1e5799, #207cca);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            color: white;
-        }
-        
-        .container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 600px;
-            width: 100%;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        h1 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: #fff;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        
-        .countdown {
-            font-size: 64px;
-            font-weight: bold;
-            margin: 30px 0;
-            color: #ffcc00;
-            text-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
-        }
-        
-        .consent-box {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 15px;
-            padding: 25px;
-            margin: 25px 0;
-            text-align: left;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .checkbox-container {
-            display: flex;
-            align-items: center;
-            margin-top: 15px;
-        }
-        
-        input[type="checkbox"] {
-            width: 24px;
-            height: 24px;
-            margin-right: 15px;
-            cursor: pointer;
-        }
-        
-        label {
-            font-size: 18px;
-            cursor: pointer;
-        }
-        
-        .btn {
-            background: #25D366;
-            color: white;
-            border: none;
-            padding: 16px 40px;
-            font-size: 20px;
-            border-radius: 50px;
-            cursor: pointer;
-            margin-top: 25px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            display: inline-block;
-        }
-        
-        .btn:disabled {
-            background: #555;
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-        
-        .btn:hover:not(:disabled) {
-            background: #128C7E;
-            transform: translateY(-3px);
-            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .logo {
-            width: 80px;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
-        }
-        
-        .status {
-            margin-top: 25px;
-            font-size: 18px;
-            color: #ffcc00;
-        }
-        
-        .instructions {
-            margin-top: 30px;
-            font-size: 16px;
-            line-height: 1.6;
-            color: #ddd;
-        }
-        
-        @media (max-width: 480px) {
-            .container {
-                padding: 25px;
-            }
-            
-            h1 {
-                font-size: 24px;
-            }
-            
-            .countdown {
-                font-size: 48px;
-            }
-            
-            .btn {
-                padding: 14px 30px;
-                font-size: 18px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <svg class="logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path fill="#25D366" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.5.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.24-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.016a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.285A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
-        </svg>
-        
-        <h1>即将跳转到 WhatsApp 咨询</h1>
-        
-        <div class="countdown" id="countdown">1</div>
-        
-        <div class="consent-box">
-            <p>请仔细阅读并同意以下条款：</p>
-            <ul style="margin-left: 20px; margin-top: 10px;">
-                <li>我确认需要咨询工作</li>
-                <li>我同意通过 WhatsApp 接收后续消息</li>
-            </ul>
-            
-            <div class="checkbox-container">
-                <input type="checkbox" id="consentCheckbox">
-                <label for="consentCheckbox">我确认已阅读并同意以上条款</label>
-            </div>
-        </div>
-        
-        <button class="btn" id="continueBtn" disabled>同意并继续</button>
-        
-        <div class="status" id="statusText">请勾选同意框以继续</div>
-        
-        <div class="instructions">
-            <p><strong>提示：</strong>页面将在倒计时结束后自动跳转，或点击上方按钮立即跳转。</p>
-            <p>如遇问题，请确保浏览器未阻止弹出窗口。</p>
-        </div>
-    </div>
+    <!-- End Facebook Pixel Code -->
 
     <script>
-        // 配置：设置您的 WhatsApp 链接
-        const WHATSAPP_LINK = "https://wa.link/qiuzhiyuan";
-        
-        // 获取DOM元素
-        const countdownElement = document.getElementById('countdown');
-        const consentCheckbox = document.getElementById('consentCheckbox');
-        const continueBtn = document.getElementById('continueBtn');
-        const statusText = document.getElementById('statusText');
-        
-        let countdown = 1;
-        let countdownInterval;
-        let hasRedirected = false;
-        
-        // 更新倒计时显示
-        function updateCountdown() {
-            countdownElement.textContent = countdown;
+        // 确保事件只发送一次
+        let eventSent = false;
+        let redirectAttempted = false;
+        let countdownStarted = false;
+
+        // 你的WhatsApp链接 - 请在这里设置你的WhatsApp链接
+        const WHATSAPP_LINK = 'https://wa.link/zhiku';
+
+        function trackConversion() {
+            if (eventSent) return;
+            eventSent = true;
             
-            if (countdown <= 0) {
-                clearInterval(countdownInterval);
-                redirectToWhatsApp();
+            console.log('🔥 开始发送转化事件...');
+            
+            // 发送Lead事件 - 这是WhatsApp跳转的标准追踪事件
+            if (typeof fbq !== 'undefined') {
+                try {
+                    fbq('track', 'Lead', {
+                        content_name: 'WhatsApp招聘咨询',
+                        content_category: 'WhatsApp跳转',
+                        content_type: 'contact_form',
+                        event_source_url: window.location.href,
+                        value: 1.00,
+                        currency: 'USD'
+                    });
+                    console.log('✅ Facebook Pixel Lead事件已发送');
+                    console.log('📝 事件参数: content_name = WhatsApp招聘咨询');
+                    
+                    // 同时发送自定义事件用于更详细的追踪
+                    fbq('trackCustom', 'WhatsAppRedirect', {
+                        content_name: 'WhatsApp招聘咨询',
+                        redirect_success: true,
+                        timestamp: new Date().toISOString()
+                    });
+                    console.log('✅ 自定义WhatsApp跳转事件已发送');
+                    
+                    // 强制刷新事件（确保发送）
+                    setTimeout(() => {
+                        console.log('🔄 强制再次发送Lead事件确保追踪');
+                        fbq('track', 'Lead', {
+                            content_name: 'WhatsApp招聘咨询',
+                            content_category: 'WhatsApp跳转_确认',
+                            event_source_url: window.location.href
+                        });
+                    }, 500);
+                    
+                } catch (error) {
+                    console.error('❌ 发送Pixel事件时出错:', error);
+                }
             } else {
-                countdown--;
+                console.error('❌ Facebook Pixel未正确加载');
             }
         }
-        
-        // 跳转到 WhatsApp
-        function redirectToWhatsApp() {
-            if (hasRedirected) return;
-            hasRedirected = true;
+
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+            statusDiv.style.display = 'block';
+        }
+
+        function showLoading(show) {
+            const loadingDiv = document.getElementById('loading');
+            loadingDiv.style.display = show ? 'block' : 'none';
+        }
+
+        function hideCountdown() {
+            const countdownDiv = document.getElementById('countdown');
+            countdownDiv.style.display = 'none';
+        }
+
+        function startCountdown() {
+            if (countdownStarted) return;
+            countdownStarted = true;
+
+            const countdownDiv = document.getElementById('countdown');
+            const countdownNumber = document.getElementById('countdownNumber');
             
-            statusText.textContent = "正在跳转到 WhatsApp...";
+            countdownDiv.style.display = 'block';
             
-            // 添加的Pixel事件 - 追踪跳转
-            fbq('track', 'WhatsAppRedirect');
+            // 1秒倒计时后自动跳转
+            setTimeout(() => {
+                hideCountdown();
+                forceRedirectToWhatsApp();
+            }, 1000);
+        }
+
+        function forceRedirectToWhatsApp() {
+            if (redirectAttempted) return;
+            redirectAttempted = true;
+
+            // 显示加载状态
+            showLoading(true);
             
             try {
-                // 尝试在新标签页打开
-                const newWindow = window.open(WHATSAPP_LINK, '_blank');
+                // 记录跳转尝试时间
+                const startTime = Date.now();
                 
-                if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-                    // 如果弹出窗口被阻止，改为当前页跳转
-                    window.location.href = WHATSAPP_LINK;
-                } else {
-                    // 关闭当前页面
-                    setTimeout(() => {
-                        window.close();
-                    }, 1000);
-                }
-            } catch (e) {
-                // 出错时直接跳转
+                // 强制跳转到WhatsApp
+                window.open(WHATSAPP_LINK, '_blank', 'noopener,noreferrer');
+                
+                // 同时尝试直接跳转（适用于某些浏览器）
                 window.location.href = WHATSAPP_LINK;
+                
+                // 延迟检查跳转是否成功
+                setTimeout(() => {
+                    checkRedirectSuccess(startTime);
+                }, 1000);
+                
+            } catch (error) {
+                console.error('跳转失败:', error);
+                showLoading(false);
+                showStatus('跳转失败，请手动打开WhatsApp', 'error');
             }
         }
-        
-        // 初始化页面
-        function initPage() {
-            // 检查本地存储中是否有同意记录
-            if (localStorage.getItem('wa_consent') === 'true') {
-                redirectToWhatsApp();
-                return;
+
+        function redirectToWhatsApp() {
+            // 手动点击按钮时立即跳转
+            forceRedirectToWhatsApp();
+        }
+
+        function checkRedirectSuccess(startTime) {
+            // 检查页面是否失焦（用户可能已经跳转到WhatsApp）
+            const timeElapsed = Date.now() - startTime;
+            
+            // 无论什么情况，都先发送Lead事件（确保事件被触发）
+            showLoading(false);
+            showStatus('已成功跳转到WhatsApp！', 'success');
+            trackConversion();
+            
+            console.log(`⏱️ 跳转检查完成，耗时: ${timeElapsed}ms`);
+        }
+
+        // 监听页面可见性变化
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden && redirectAttempted && !eventSent) {
+                // 页面失焦，可能已经跳转到WhatsApp
+                setTimeout(() => {
+                    trackConversion();
+                }, 500);
+            }
+        });
+
+        // 监听焦点变化
+        window.addEventListener('blur', function() {
+            if (redirectAttempted && !eventSent) {
+                setTimeout(() => {
+                    trackConversion();
+                }, 500);
+            }
+        });
+
+        // 页面加载完成后自动开始倒计时
+        window.addEventListener('load', function() {
+            console.log('📱 页面加载完成');
+            
+            // 验证Facebook Pixel是否正确加载
+            if (typeof fbq !== 'undefined') {
+                console.log('✅ Facebook Pixel已正确加载');
+                
+                // 测试Pixel连接
+                fbq('track', 'PageView');
+                console.log('✅ PageView事件已发送');
+            } else {
+                console.error('❌ Facebook Pixel加载失败 - 请检查Pixel ID设置');
+                showStatus('⚠️ 追踪设置需要检查', 'error');
             }
             
-            // 设置倒计时
-            countdownInterval = setInterval(updateCountdown, 1000);
-            
-            // 监听复选框变化
-            consentCheckbox.addEventListener('change', function() {
-                continueBtn.disabled = !this.checked;
-                statusText.textContent = this.checked ? 
-                    "已同意 - 点击按钮立即跳转" : 
-                    "请勾选同意框以继续";
-            });
-            
-            // 监听按钮点击
-            continueBtn.addEventListener('click', function() {
-                // 保存同意状态
-                localStorage.setItem('wa_consent', 'true');
-                redirectToWhatsApp();
-            });
+            // 页面加载完成后立即开始倒计时
+            setTimeout(() => {
+                startCountdown();
+            }, 100);
+        });
+
+        // 测试Lead事件的函数
+        function testPixelEvent() {
+            console.log('🧪 手动测试Lead事件...');
+            eventSent = false; // 重置状态以允许测试
+            trackConversion();
+            showStatus('测试Lead事件已发送！检查控制台和Events Manager', 'success');
         }
-        
-        // 页面加载完成后初始化
-        window.addEventListener('DOMContentLoaded', initPage);
     </script>
 </body>
 </html>
